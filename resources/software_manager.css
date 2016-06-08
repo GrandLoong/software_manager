@@ -1,0 +1,114 @@
+
+
+#search_frame {
+    background-color: rgb(195, 195, 195);
+    color: rgb(46, 46, 46);
+    border-radius: 5px;
+}
+
+#search_frame QLineEdit {
+    background-color: rgb(195, 195, 195);
+    color: rgb(46, 46, 46);
+    font-size: 11px;
+}
+
+#search_frame QPushButton {
+    background-color: rgb(195, 195, 195);
+}
+
+#search_frame QLabel {
+    background-color: rgb(195, 195, 195);
+}
+
+#software_commands::item:hover
+{
+	background-color: transparent;
+    border: 1px solid rgb(67, 131, 168);
+    border-radius: 3px;
+}
+#software_commands::item:focus
+{
+	border: 1px solid rgb(185, 185, 185);
+}
+
+#software_commands::item:selected
+{
+ 	color: rgb(0, 198, 0);
+	background-color: transparent;
+    border: 1px solid rgb(67, 131, 168);
+    border-radius: 3px;
+}
+
+#software_commands
+{
+	background-color: rgb(38, 38, 38);
+	color: rgb(255, 255, 255);
+}
+#user_button
+{
+    margin: 2px;
+    background-color: transparent;
+}
+
+#user_button::menu-indicator
+{
+    image: none;
+}
+
+#footer {
+    background-color: rgb(83, 83, 83);
+}
+
+#footer QPushButton
+{
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+#footer QPushButton:hover
+{
+    border: 1px solid rgb(67, 131, 168);
+    border-radius: 3px;
+}
+
+QPushButton:focus
+{
+	border: 1px solid rgb(185, 185, 185);
+}
+QWidget
+{
+	border: transparent;
+    border-radius: 3px;
+    background-color:  rgb(43, 43, 43);
+    color: rgb(100, 100, 100);
+    font-size: 11px;
+}
+
+
+/*QFrame {*/
+	/*background-color: rgb(68, 68, 68);*/
+/*}*/
+
+#button_frame {
+
+    background-color: rgb(38, 38, 38);
+    border: transparent;
+    color: rgb(100, 100, 100);
+}
+
+#label_project{
+
+    background-color: rgb(38, 38, 38);
+    border: transparent;
+    color: rgb(100, 100, 100);
+    font-size: 24px;
+}
+
+
+#pixomondo_button {
+    background-color: rgb(83, 83, 83);
+    border-radius: 2px;
+    padding: 5px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
