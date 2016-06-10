@@ -9,9 +9,7 @@ import subprocess
 import webbrowser
 
 from PySide import QtGui, QtCore
-import yaml
 from ui_elements.loadui import loadUiType, loadStyleSheet
-from libs import shotgun as sg
 from libs.manager import Manager
 import config
 
@@ -28,14 +26,14 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.manager = Manager()
         self.app_dir = config.APP_DIR
         self.iconComboBox = QtGui.QComboBox()
-        self.iconComboBox.addItem(QtGui.QIcon(self.add_icon('nuke_pixo.png')), "Dmyz")
+        self.iconComboBox.addItem(QtGui.QIcon(self.add_icon('tray_icon.png')), "Dmyz")
         self.quitAction = QtGui.QAction("exit", self, triggered=QtGui.qApp.quit)
         self.trayIconMenu = QtGui.QMenu(self)
         self.trayIconMenu.addAction(self.quitAction)
         self.trayIcon = QtGui.QSystemTrayIcon(self)
         self.trayIcon.setContextMenu(self.trayIconMenu)
         self.iconComboBox.currentIndexChanged.connect(self.set_icon)
-        self.setWindowIcon(QtGui.QIcon(self.add_icon('nuke_pixo.png')))
+        self.setWindowIcon(QtGui.QIcon(self.add_icon('tray_icon.png')))
         self.iconComboBox.setCurrentIndex(1)
         self.trayIcon.show()
         self.trayIcon.setToolTip('Software Manager')
@@ -56,10 +54,10 @@ class SoftwareManagerGUI(ui_form, ui_base):
             if icon_name:
                 image_path = pathjoin(self.app_dir, 'resources', icon_name)
             else:
-                image_path = pathjoin(self.app_dir, 'resources', 'pixomondo.png')
+                image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
 
             if not os.path.isfile(image_path):
-                image_path = pathjoin(self.app_dir, 'resources', 'pixomondo.png')
+                image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
             image = QtGui.QIcon(image_path)
             layer_item = QtGui.QListWidgetItem(image, software_name)
             software_describe = self.data[software_name]['describe']
@@ -75,25 +73,26 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.search_text.textChanged.connect(self.search_software)
         self.pixomondo_button.clicked.connect(self.popup_web)
         self.search_button.clicked.connect(lambda: self.search_text.setText(''))
-        current_user = sg.findUserByName(self.user_name)
-        thumbnail_url = current_user.get("image")
-        if thumbnail_url is not None:
-            (_, thumbnail_file) = tempfile.mkstemp(suffix=".jpg")
-            try:
-                sg.download_url(thumbnail_url, thumbnail_file)
-                pixmap = QtGui.QPixmap(thumbnail_file)
-                self.user_button.setIcon(QtGui.QIcon(pixmap))
-            except Exception:
-                # if it fails for any reason, that's alright
-                pass
-            finally:
-                try:
-                    os.remove(thumbnail_file)
-                except Exception:
-                    pass
+        # current_user = sg.findUserByName(self.user_name)
+        # thumbnail_url = current_user.get("image")
+        # thumbnail_url = ''
+        # if thumbnail_url is not None:
+        #     (_, thumbnail_file) = tempfile.mkstemp(suffix=".jpg")
+        #     try:
+        #         # sg.download_url(thumbnail_url, thumbnail_file)
+        #         pixmap = QtGui.QPixmap(thumbnail_file)
+        #         self.user_button.setIcon(QtGui.QIcon(pixmap))
+        #     except Exception:
+        #         # if it fails for any reason, that's alright
+        #         pass
+        #     finally:
+        #         try:
+        #             os.remove(thumbnail_file)
+        #         except Exception:
+        #             pass
 
         self.user_menu = QtGui.QMenu(self)
-        name_action = self.user_menu.addAction(current_user["name"])
+        # name_action = self.user_menu.addAction(current_user["name"])
         # url_action = self.user_menu.addAction(connection.base_url.split("://")[1])
         self.user_menu.addSeparator()
         self.user_menu.addAction('')
@@ -127,8 +126,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
         if os.path.exists(self.drag_file):
             software_name = os.path.basename(self.drag_file).split('.')[0]
             software_path = self.drag_file
-            software_icon = pathjoin(self.app_dir, 'resources', 'pixomondo.png').replace('\\', '/')
-            self.data.update({software_name: {'path': software_path, 'icon': 'pixomondo.png', 'describe': software_name,
+            software_icon = pathjoin(self.app_dir, 'resources', 'default_software_icon.png').replace('\\', '/')
+            self.data.update({software_name: {'path': software_path, 'icon': 'default_software_icon.png', 'describe': software_name,
                                               'department': ''}})
             image = QtGui.QIcon(software_icon)
             layer_item = QtGui.QListWidgetItem(image, software_name)
@@ -273,10 +272,10 @@ class SoftwareManagerGUI(ui_form, ui_base):
                 if icon_name:
                     image_path = pathjoin(self.app_dir, 'resources', icon_name)
                 else:
-                    image_path = pathjoin(self.app_dir, 'resources', 'pixomondo.png')
+                    image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
 
                 if not os.path.isfile(image_path):
-                    image_path = pathjoin(self.app_dir, 'resources', 'pixomondo.png')
+                    image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
                 image = QtGui.QIcon(image_path)
                 layer_item = QtGui.QListWidgetItem(image, software_name)
                 layer_item.setToolTip(self.html_msg.format(software_name))
