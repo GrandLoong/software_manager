@@ -57,3 +57,5 @@ ui_elements/loadui.pyc
 /test.py
 resources/logo_256.psd
 /software_manager.cmd.lnk
+/run.cmd
+/run.vbs

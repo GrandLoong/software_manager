@@ -1,2 +1,2 @@
 @echo off
-mshta vbscript:createobject("wscript.shell").run("""%~dp0software_manager.py"" h",0)(window.close)&&exit
+start mshta vbscript:CreateObject("WScript.Shell").Run("cmd /c python software_manager.py",0,FALSE)(window.close)&&exit

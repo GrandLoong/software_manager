@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
+import subprocess
 import sys
-import tempfile
-
+import webbrowser
 from os.path import join as pathjoin
 
-import subprocess
-import webbrowser
-
 from PySide import QtGui, QtCore
-from ui_elements.loadui import loadUiType, loadStyleSheet
-from libs.manager import Manager
+
 import config
+from libs.manager import Manager
+from ui_elements.loadui import loadUiType, loadStyleSheet
 
 uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager2.ui')
 css_file = pathjoin(os.path.dirname(__file__), 'resources/software_manager.css')
@@ -128,8 +126,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
             software_name = os.path.basename(self.drag_file).split('.')[0]
             software_path = self.drag_file
             software_icon = pathjoin(self.app_dir, 'resources', 'default_software_icon.png').replace('\\', '/')
-            self.data.update({software_name: {'path': software_path, 'icon': 'default_software_icon.png', 'describe': software_name,
-                                              'department': ''}})
+            self.data.update(
+                {software_name: {'path': software_path, 'icon': 'default_software_icon.png', 'describe': software_name,
+                                 'department': ''}})
             image = QtGui.QIcon(software_icon)
             layer_item = QtGui.QListWidgetItem(image, software_name)
             layer_item.setToolTip(self.html_msg.format(software_name))
@@ -290,7 +289,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    QtGui.QApplication.setQuitOnLastWindowClosed(False)
+    # QtGui.QApplication.setQuitOnLastWindowClosed(False)
     gui = SoftwareManagerGUI()
     gui.setStyleSheet(loadStyleSheet(css_file))
     gui.show_message(u'software manager')
