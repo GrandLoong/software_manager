@@ -1,13 +1,13 @@
 application:
     maya launcher:
-      path: \\work\app_config\release\maya\modulesLauncher\maya_launcher.bat
+      path: ./wrappers/maya.bat
       icon: maya.png
       department: cg
       describe: |
-        run maya launcher
+        测试
 
-    3dsMax launcher:
-      path: \\work\app_config\release\max\modulesLauncher\max_launcher.bat
+    3dsMax:
+      path: ./wrappers/max.bat
       icon: max.png
       department: cg
       describe: |
@@ -20,65 +20,16 @@ application:
       describe: |
           run NukeX
 
-    rv Launcher:
-      path: \\work\app_config\release\rv\modulesLauncher\rv_launcher.bat
-      icon: rv.ico
-      department: cg
-      describe: |
-          rv luancher
-
-    reset 3dsMax 2014:
-      path: \\work\app_config\release\sandbox\hao.long\python\Reset_max2014\Reset_max2014.bat
-      icon: resetmax.ico
-      describe: |
-          fix max2014 crash problem, clear max2014
-
-    roxy2:
-      path: \\work\app_config\release\pxm_roxy2\roxy2.bat
-      icon: roxy2.png
-      department: cg
-      describe: |
-          pixo roxy
-
-
-    SG thumbnail:
-      path: \\work\app_config\release\sandbox\hao.long\python\pixo_sg_thumbnail\shotgun_thumbnail.bat
-      icon:
-      department: cg
-      describe: |
-          make sg thumbnail
-
-    pek contextcutter:
-      path: \\work\app_config\release\sandbox\hao.long\python\pek_contextcutter\pek_contextcutter.bat
-      icon:
-      department: cg
-      describe: |
-          pek contextcutter make to RV
-
-    houdini launcher:
-      path: \\work\app_config\release\houdini\modulesLauncher\houdini_launcher.bat
-      icon: houdini15.png
-      department: cg
-      describe: |
-          houdini Launcher
-
     photoshop:
-      path: \\work\app_config\release\system\wrappers\bin\photoshop.bat
+      path: ./wrappers/photoshop.bat
       icon: Photoshop.png
       department: design
       describe: |
           run Photoshop
 
-    deadline monitor:
-      path: C:\Program Files\Thinkbox\Deadline6\bin\deadlinemonitor.exe
-      icon: deadlineMonitor.png
-      department: design
+    风暴英雄:
+      path: 'C:\Program Files (x86)\Heroes of the Storm\Heroes of the Storm.exe'
+      icon:
+      department:
       describe: |
-          Deadline Monitor
-
-    pxm exportit:
-      path: \\work\app_config\release\pxm_exportit\start.bat
-      icon: pxm_exportit.png
-      department: coordinator
-      describe: |
-          pixomondo exportit
+          风暴英雄

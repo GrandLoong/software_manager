@@ -1,1 +1,1 @@
-call Photoshop %1
+call "C:\Program Files\Adobe\Adobe Photoshop CS6 (64 Bit)\Photoshop.exe" %1

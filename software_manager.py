@@ -47,7 +47,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
         self.search_button.setIcon(QtGui.QIcon(self.add_icon('icon_inbox_clear.png')))
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
-        self.pixomondo_button.setIcon(QtGui.QIcon(self.add_icon('logo_wide.png')))
+        self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('logo_wide.png')))
+        self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('logo_wide.png')))
 
         for software_name in self.data.keys():
             icon_name = self.data[software_name]['icon']
@@ -65,13 +66,13 @@ class SoftwareManagerGUI(ui_form, ui_base):
             <span style=" font-weight:600; color:#85cd00;">Describe:<br></span></p>
             <span style=" width:400px; font-weight:600; color:#85cd00;">    {0}</span></p>
             """
-            layer_item.setToolTip(self.html_msg.format(software_describe))
+            layer_item.setToolTip(u'%s' % software_describe)
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
 
         self.software_commands.itemDoubleClicked.connect(self.launch)
         self.search_text.textChanged.connect(self.search_software)
-        self.pixomondo_button.clicked.connect(self.popup_web)
+        self.pushButton_bottom_icon.clicked.connect(self.popup_web)
         self.search_button.clicked.connect(lambda: self.search_text.setText(''))
         # current_user = sg.findUserByName(self.user_name)
         # thumbnail_url = current_user.get("image")

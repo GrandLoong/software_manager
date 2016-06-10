@@ -54,3 +54,5 @@ ui_elements/__init__.pyc
 ui_elements/loadui.pyc
 /test/
 /Temp/
+/test.py
+resources/logo_256.psd
