@@ -39,6 +39,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.setAcceptDrops(True)
         self.delete = False
         self.data = self.manager.global_data
+        self.gui_show = True
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
+        # QtGui.QSizeGrip(self)
         local_data = self.manager.local_data
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
@@ -67,6 +70,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
             layer_item.setToolTip(u'%s' % software_describe)
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
+
+
 
         self.software_commands.itemDoubleClicked.connect(self.launch)
         self.search_text.textChanged.connect(self.search_software)
@@ -113,8 +118,31 @@ class SoftwareManagerGUI(ui_form, ui_base):
         # self.actionShow_Console.triggered.connect(self.__console.show_and_raise)
         # self.actionSign_Out.triggered.connect(self.sign_out)
         # self.actionQuit.triggered.connect(self.handle_quit_action)
-
+        self.set_transparency(True)
         self.user_button.setMenu(self.user_menu)
+        self.rightButton = False
+
+        self.desktop = QtGui.QDesktopWidget()
+        self.move(self.desktop.availableGeometry().width() - self.width(),
+                  self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
+        # self.showAnimation()
+        print self.desktop.availableGeometry().height()
+        print self.desktop.availableGeometry().width()
+
+
+
+    def set_transparency(self, enabled):
+        if enabled:
+            self.setAutoFillBackground(False)
+        else:
+            self.setAttribute(QtCore.Qt.WA_NoSystemBackground, False)
+            # 下面这种方式好像不行
+        #        pal=QtGui.QPalette()
+        #        pal.setColor(QtGui.QPalette.Background, QColor(127, 127,10,120))
+        #        self.setPalette(pal)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground, enabled)
+        self.repaint()
+
 
     @staticmethod
     def popup_web():
@@ -225,17 +253,23 @@ class SoftwareManagerGUI(ui_form, ui_base):
     #     # else:
     #         event.ignore()
 
+    def mouseReleaseEvent(self, e):
+        if self.rightButton == True:
+            self.rightButton = False
+            self.popMenu.popup(e.globalPos())
 
-    def mousePressEvent(self, event):
-        """re-implemented to suppress Right-Clicks from selecting items."""
+    def mouseMoveEvent(self, e):
+        if e.buttons() & QtCore.Qt.LeftButton:
+            self.move(e.globalPos() - self.dragPos)
+            e.accept()
 
-        if event.type() == QtCore.QEvent.MouseButtonPress:
-            if event.button() == QtCore.Qt.RightButton:
-                print 'aaaa'
-                return
-            else:
-                print 'bbbbb'
-                super(SoftwareManagerGUI, self).mousePressEvent(event)
+    def mousePressEvent(self, e):
+
+        if e.button() == QtCore.Qt.LeftButton:
+            self.dragPos = e.globalPos() - self.frameGeometry().topLeft()
+            e.accept()
+        if e.button() == QtCore.Qt.RightButton and self.rightButton == False:
+            self.rightButton = True
 
     def launch(self):
         print self.data
@@ -253,9 +287,14 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
     def icon_activated(self, reason):
         if reason in (QtGui.QSystemTrayIcon.Trigger, QtGui.QSystemTrayIcon.DoubleClick):
-            self.showNormal()
-        elif reason == QtGui.QSystemTrayIcon.MiddleClick:
-            self.show_message('ddddd')
+            if self.gui_show:
+                self.hide()
+                self.gui_show = False
+            else:
+                self.show()
+                self.move(self.desktop.availableGeometry().width() - self.width(),
+                          self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
+                self.gui_show = True
 
     def set_icon(self, index):
         icon = self.iconComboBox.itemIcon(0)
