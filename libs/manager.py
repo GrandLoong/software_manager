@@ -36,4 +36,3 @@ if __name__ == '__main__':
     m = Manager()
     print m.global_data
     print m.local_data
-    print 'a'
