@@ -10,6 +10,7 @@ from PySide import QtGui, QtCore
 
 import config
 from libs.manager import Manager
+from libs.splash_screen import SplashScreen
 from ui_elements.loadui import loadUiType, loadStyleSheet
 
 uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager2.ui')
@@ -108,7 +109,11 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
         self.desktop = QtGui.QDesktopWidget()
         self.move(self.desktop.availableGeometry().width() - self.width(),
+
                   self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
+        splash = QtGui.QSplashScreen()
+        splash.setPixmap(QtGui.QPixmap(self.add_icon('tray_icon.png')))
+        splash.show()
 
     def set_transparency(self, enabled):
         if enabled:
@@ -285,6 +290,11 @@ if __name__ == "__main__":
     # QtGui.QApplication.setQuitOnLastWindowClosed(False)
     gui = SoftwareManagerGUI()
     gui.setStyleSheet(loadStyleSheet(css_file))
+    splash = SplashScreen()
+    splash.effect()
+    app.processEvents()  # ＃设置启动画面不影响其他效果
     # gui.show_message(u'software manager')
     gui.show()
+    splash.finish(gui)
     app.exec_()
+

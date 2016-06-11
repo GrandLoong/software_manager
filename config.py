@@ -3,6 +3,7 @@ import sys
 from os.path import join as pathjoin
 
 APP_DIR = os.path.dirname(__file__)
+RESOURCES = pathjoin(APP_DIR, 'resources')
 
 
 def get_local_profile_dir():
