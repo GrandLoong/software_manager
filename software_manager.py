@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import sys
-import webbrowser
+import subprocess
 from os.path import join as pathjoin
+
+import webbrowser
 
 from PySide import QtGui, QtCore
 
@@ -38,13 +39,15 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.trayIcon.activated.connect(self.icon_activated)
         self.setAcceptDrops(True)
         self.delete = False
-        self.data = self.manager.global_data
         self.gui_show = True
+
+        self.data = self.manager.global_data
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
-        # QtGui.QSizeGrip(self)
         local_data = self.manager.local_data
+
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
+
         self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
         self.search_button.setIcon(QtGui.QIcon(self.add_icon('icon_inbox_clear.png')))
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
@@ -71,33 +74,14 @@ class SoftwareManagerGUI(ui_form, ui_base):
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
 
-
-
         self.software_commands.itemDoubleClicked.connect(self.launch)
+
         self.search_text.textChanged.connect(self.search_software)
+
         self.pushButton_bottom_icon.clicked.connect(self.popup_web)
         self.search_button.clicked.connect(lambda: self.search_text.setText(''))
-        # current_user = sg.findUserByName(self.user_name)
-        # thumbnail_url = current_user.get("image")
-        # thumbnail_url = ''
-        # if thumbnail_url is not None:
-        #     (_, thumbnail_file) = tempfile.mkstemp(suffix=".jpg")
-        #     try:
-        #         # sg.download_url(thumbnail_url, thumbnail_file)
-        #         pixmap = QtGui.QPixmap(thumbnail_file)
-        #         self.user_button.setIcon(QtGui.QIcon(pixmap))
-        #     except Exception:
-        #         # if it fails for any reason, that's alright
-        #         pass
-        #     finally:
-        #         try:
-        #             os.remove(thumbnail_file)
-        #         except Exception:
-        #             pass
 
         self.user_menu = QtGui.QMenu(self)
-        # name_action = self.user_menu.addAction(current_user["name"])
-        # url_action = self.user_menu.addAction(connection.base_url.split("://")[1])
         self.user_menu.addSeparator()
         self.user_menu.addAction('')
         # self.user_menu.addAction(self.actionKeep_on_Top)
@@ -125,24 +109,14 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.desktop = QtGui.QDesktopWidget()
         self.move(self.desktop.availableGeometry().width() - self.width(),
                   self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
-        # self.showAnimation()
-        print self.desktop.availableGeometry().height()
-        print self.desktop.availableGeometry().width()
-
-
 
     def set_transparency(self, enabled):
         if enabled:
             self.setAutoFillBackground(False)
         else:
             self.setAttribute(QtCore.Qt.WA_NoSystemBackground, False)
-            # 下面这种方式好像不行
-        #        pal=QtGui.QPalette()
-        #        pal.setColor(QtGui.QPalette.Background, QColor(127, 127,10,120))
-        #        self.setPalette(pal)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground, enabled)
         self.repaint()
-
 
     @staticmethod
     def popup_web():
@@ -187,12 +161,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
         if e.key() == QtCore.Qt.Key_Escape:
             self.close()
 
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls:
-            event.accept()
-        else:
-            event.ignore()
-
     def dragMoveEvent(self, event):
         self.search_text.deselect()
         self.search_text.setPlaceholderText('drag to here is delete icon')
@@ -201,9 +169,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
             event.accept()
         else:
             super(SoftwareManagerGUI, self).dragMoveEvent(event)
-
-    # def mouseMoveEvent(self, event):
-    #     print event.pos()
 
     def dropEvent(self, event):
         self.search_text.deselect()
@@ -236,25 +201,14 @@ class SoftwareManagerGUI(ui_form, ui_base):
             event.ignore()
         self.search_text.setPlaceholderText('Search software name')
 
-    #     # if event.mimeData().hasUrls:
-    #     #     event.setDropAction(QtCore.Qt.CopyAction)
-    #     #     event.accept()
-    #     #     # Workaround for OSx dragging and dropping
-    #     #     try:
-    #     #         for url in event.mimeData().urls():
-    #     #             fname = '{0}'.format(url.toLocalFile())
-    #     #     except UnicodeEncodeError:
-    #     #         fname = None
-    #     #     self.drag_file = fname
-    #     #     if self.drag_file.endswith('.lnk') or self.drag_file.endswith('.exe') or self.drag_file.endswith('.bat'):
-    #     #         self.drag_to_shortcut()
-    #     #     else:
-    #     #         self.drag_to_run_program()
-    #     # else:
-    #         event.ignore()
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
+            event.accept()
+        else:
+            event.ignore()
 
     def mouseReleaseEvent(self, e):
-        if self.rightButton == True:
+        if self.rightButton:
             self.rightButton = False
             self.popMenu.popup(e.globalPos())
 
@@ -331,6 +285,6 @@ if __name__ == "__main__":
     # QtGui.QApplication.setQuitOnLastWindowClosed(False)
     gui = SoftwareManagerGUI()
     gui.setStyleSheet(loadStyleSheet(css_file))
-    gui.show_message(u'software manager')
+    # gui.show_message(u'software manager')
     gui.show()
     app.exec_()

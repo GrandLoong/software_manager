@@ -44,7 +44,6 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
-.gitignore
 config.pyc
 department/
 libs/__init__.pyc
