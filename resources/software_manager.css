@@ -34,7 +34,8 @@
 #software_commands::item:selected
 {
  	color: rgb(0, 198, 0);
-	background-color: transparent;
+	background-color: rgba(67, 131, 168, 0.4);
+    /*border: 1px solid rgb(67, 131, 168);*/
     border: 1px solid rgb(67, 131, 168);
     border-radius: 3px;
 }
@@ -79,7 +80,7 @@ QWidget
 {
 	border: transparent;
     border-radius: 3px;
-    background-color:  rgb(43, 43, 43);
+    background-color:  rgb(38, 38, 38);
     color: rgb(100, 100, 100);
     font-size: 11px;
 }
@@ -103,7 +104,6 @@ QWidget
     color: rgb(100, 100, 100);
     font-size: 24px;
 }
-
 
 #pushButton_bottom_icon {
     background-color: rgb(83, 83, 83);

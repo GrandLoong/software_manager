@@ -13,7 +13,7 @@ from libs.manager import Manager
 from libs.splash_screen import SplashScreen
 from ui_elements.loadui import loadUiType, loadStyleSheet
 
-uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager2.ui')
+uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager.ui')
 css_file = pathjoin(os.path.dirname(__file__), 'resources/software_manager.css')
 ui_form, ui_base = loadUiType(uiFile)
 
@@ -41,6 +41,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.setAcceptDrops(True)
         self.delete = False
         self.gui_show = True
+        self.dragPos = 0
 
         self.data = self.manager.global_data
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
@@ -52,8 +53,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
         self.search_button.setIcon(QtGui.QIcon(self.add_icon('icon_inbox_clear.png')))
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
-        self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('logo_wide.png')))
-        self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('logo_wide.png')))
+        self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
+        self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
 
         for software_name in self.data.keys():
             icon_name = self.data[software_name]['icon']
@@ -76,7 +77,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
             self.software_commands.addItem(layer_item)
 
         self.software_commands.itemDoubleClicked.connect(self.launch)
-
+        # self.software_commands.itemClicked.connect(self.find_item_under_mouse)
+        self.software_commands.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+        # self.software_commands.customContextMenuRequested.connect(self.find_item_under_mouse)
         self.search_text.textChanged.connect(self.search_software)
 
         self.pushButton_bottom_icon.clicked.connect(self.popup_web)
@@ -85,28 +88,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.user_menu = QtGui.QMenu(self)
         self.user_menu.addSeparator()
         self.user_menu.addAction('')
-        # self.user_menu.addAction(self.actionKeep_on_Top)
-        # self.user_menu.addAction(self.actionShow_Console)
-        # about_action = self.user_menu.addAction("About...")
-        # self.user_menu.addSeparator()
-        # self.user_menu.addAction(self.ui.actionSign_Out)
-        # self.user_menu.addAction(self.ui.actionQuit)
-
-        # name_action.triggered.connect(self.open_site_in_browser)
-        # url_action.triggered.connect(self.open_site_in_browser)
-        # about_action.triggered.connect(self.handle_about)
-
-        # QtGui.QApplication.instance().aboutToQuit.connect(self.handle_quit_action)
-
-        # self.actionPin_to_Menu.triggered.connect(self.toggle_pinned)
-        # self.actionKeep_on_Top.triggered.connect(self.toggle_keep_on_top)
-        # self.actionShow_Console.triggered.connect(self.__console.show_and_raise)
-        # self.actionSign_Out.triggered.connect(self.sign_out)
-        # self.actionQuit.triggered.connect(self.handle_quit_action)
         self.set_transparency(True)
         self.user_button.setMenu(self.user_menu)
         self.rightButton = False
-
         self.desktop = QtGui.QDesktopWidget()
         self.move(self.desktop.availableGeometry().width() - self.width(),
 
@@ -114,6 +98,42 @@ class SoftwareManagerGUI(ui_form, ui_base):
         splash = QtGui.QSplashScreen()
         splash.setPixmap(QtGui.QPixmap(self.add_icon('tray_icon.png')))
         splash.show()
+
+    def find_item_under_mouse(self, widget):
+        viewportPos = widget.viewport().mapFromGlobal(QtGui.QCursor.pos())
+        item = widget.itemAt(viewportPos)
+        return item
+
+    def show_software_item_menu(self):
+        item = self.find_item_under_mouse(self.software_commands)
+        if item:
+            popupMenu = QtGui.QMenu(self)
+            viewFolder = self._action("Delete Current Item", self.delete_item)
+            popupMenu.addAction(viewFolder)
+            popupMenu.addSeparator()
+            popupMenu.exec_(QtGui.QCursor.pos())
+            # return item
+
+    def delete_item(self):
+        item = self.software_commands.takeItem(self.software_commands.currentRow())
+        self.software_commands.setCurrentRow(-1)
+        self.data.pop(item.text())
+
+    def _action(self, name, callback=None, icon_path=None):
+        """ Create an action and store it in self.actions.
+        """
+        action = QtGui.QAction(self)
+        action.setText(name)
+        if icon_path:
+            action.setIcon(icon_path)
+        if callback:
+            action.connect(action, QtCore.SIGNAL("triggered()"), callback)
+        return action
+
+    def show_right_menu(self):
+        print self.sender().button()
+        # if QtCore.Qt.RightButton:
+        #     print 'show_right_menu'
 
     def set_transparency(self, enabled):
         if enabled:
@@ -132,16 +152,16 @@ class SoftwareManagerGUI(ui_form, ui_base):
         if os.path.exists(self.drag_file):
             software_name = os.path.basename(self.drag_file).split('.')[0]
             software_path = self.drag_file
-            software_icon = pathjoin(self.app_dir, 'resources', 'default_software_icon.png').replace('\\', '/')
-            self.data.update(
-                {software_name: {'path': software_path, 'icon': 'default_software_icon.png', 'describe': software_name,
-                                 'department': ''}})
-            image = QtGui.QIcon(software_icon)
-            layer_item = QtGui.QListWidgetItem(image, software_name)
-            layer_item.setToolTip(self.html_msg.format(software_name))
-            layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
-            self.software_commands.addItem(layer_item)
-            print self.data
+            if not software_name in self.data:
+                software_icon = pathjoin(self.app_dir, 'resources', 'pixomondo.png').replace('\\', '/')
+                self.data.update({software_name: {'path': software_path, 'icon': 'pixomondo.png',
+                                                  'describe': software_name, 'order': self.software_commands.count()}})
+                image = QtGui.QIcon(software_icon)
+                layer_item = QtGui.QListWidgetItem(image, software_name)
+                layer_item.setToolTip(self.html_msg.format(software_name))
+                layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+                self.software_commands.addItem(layer_item)
+                print self.data
 
     def drag_to_run_program(self):
         if self.drag_file:
@@ -156,24 +176,23 @@ class SoftwareManagerGUI(ui_form, ui_base):
     def save_profile(self):
         self.manager.save_local_data(self.data)
 
+    def contextMenuEvent(self, event):
+        self.show_software_item_menu()
+
     def closeEvent(self, event):
         self.hide()
         self.save_profile()
-        print 'cloase'
         event.ignore()
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Escape:
             self.close()
 
-    def dragMoveEvent(self, event):
-        self.search_text.deselect()
-        self.search_text.setPlaceholderText('drag to here is delete icon')
-        if event.mimeData().hasUrls():
-            event.setDropAction(QtCore.Qt.MoveAction)
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls:
             event.accept()
         else:
-            super(SoftwareManagerGUI, self).dragMoveEvent(event)
+            event.ignore()
 
     def dropEvent(self, event):
         self.search_text.deselect()
@@ -199,23 +218,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
                 self.drag_to_shortcut()
             else:
                 self.drag_to_run_program()
-        else:
-            item = self.software_commands.takeItem(self.software_commands.currentRow())
-            self.software_commands.setCurrentRow(-1)
-            self.data.pop(item.text())
-            event.ignore()
-        self.search_text.setPlaceholderText('Search software name')
-
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls:
-            event.accept()
-        else:
-            event.ignore()
-
-    def mouseReleaseEvent(self, e):
-        if self.rightButton:
-            self.rightButton = False
-            self.popMenu.popup(e.globalPos())
 
     def mouseMoveEvent(self, e):
         if e.buttons() & QtCore.Qt.LeftButton:
@@ -223,7 +225,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
             e.accept()
 
     def mousePressEvent(self, e):
-
         if e.button() == QtCore.Qt.LeftButton:
             self.dragPos = e.globalPos() - self.frameGeometry().topLeft()
             e.accept()
@@ -247,7 +248,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
     def icon_activated(self, reason):
         if reason in (QtGui.QSystemTrayIcon.Trigger, QtGui.QSystemTrayIcon.DoubleClick):
             if self.gui_show:
-                self.hide()
+                # self.hide()
+                self.close()
                 self.gui_show = False
             else:
                 self.show()
