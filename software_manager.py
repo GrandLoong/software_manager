@@ -68,10 +68,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
             image = QtGui.QIcon(image_path)
             layer_item = QtGui.QListWidgetItem(image, software_name)
             software_describe = self.data[software_name]['describe']
-            self.html_msg = """
-            <span style=" font-weight:600; color:#85cd00;">Describe:<br></span></p>
-            <span style=" width:400px; font-weight:600; color:#85cd00;">    {0}</span></p>
-            """
             layer_item.setToolTip(u'%s' % software_describe)
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
@@ -93,7 +89,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.rightButton = False
         self.desktop = QtGui.QDesktopWidget()
         self.move(self.desktop.availableGeometry().width() - self.width(),
-
                   self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
         splash = QtGui.QSplashScreen()
         splash.setPixmap(QtGui.QPixmap(self.add_icon('tray_icon.png')))
@@ -145,7 +140,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
     @staticmethod
     def popup_web():
-        webbrowser.open_new_tab('https://pixomondovfx.shotgunstudio.com')
+        webbrowser.open_new_tab('https://vimeo.com/loong')
 
     def drag_to_shortcut(self):
         print self.drag_file
@@ -158,7 +153,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
                                                   'describe': software_name, 'order': self.software_commands.count()}})
                 image = QtGui.QIcon(software_icon)
                 layer_item = QtGui.QListWidgetItem(image, software_name)
-                layer_item.setToolTip(self.html_msg.format(software_name))
+                layer_item.setToolTip(u'%s' % software_name)
                 layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
                 self.software_commands.addItem(layer_item)
                 print self.data
@@ -182,6 +177,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
     def closeEvent(self, event):
         self.hide()
         self.save_profile()
+        self.gui_show = False
         event.ignore()
 
     def keyPressEvent(self, e):
@@ -250,7 +246,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
             if self.gui_show:
                 # self.hide()
                 self.close()
-                self.gui_show = False
             else:
                 self.show()
                 self.move(self.desktop.availableGeometry().width() - self.width(),
@@ -278,7 +273,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
                     image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
                 image = QtGui.QIcon(image_path)
                 layer_item = QtGui.QListWidgetItem(image, software_name)
-                layer_item.setToolTip(self.html_msg.format(software_name))
+                layer_item.setToolTip(u'%s' % software_name)
                 layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
                 self.software_commands.addItem(layer_item)
 
@@ -299,4 +294,3 @@ if __name__ == "__main__":
     gui.show()
     splash.finish(gui)
     app.exec_()
-
