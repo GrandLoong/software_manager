@@ -41,7 +41,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.setAcceptDrops(True)
         self.delete = False
         self.gui_show = True
-        self.dragPos = 0
+        self.dragPos = QtCore.QPoint(0, 0)
 
         self.data = self.manager.global_data
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
