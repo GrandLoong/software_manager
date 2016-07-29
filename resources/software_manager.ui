@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>724</height>
+    <width>538</width>
+    <height>731</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
+    <width>530</width>
     <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
+    <width>600</width>
     <height>977</height>
    </size>
   </property>
@@ -45,7 +45,7 @@
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>481</width>
+     <width>521</width>
      <height>51</height>
     </rect>
    </property>
@@ -234,7 +234,7 @@
     <rect>
      <x>9</x>
      <y>660</y>
-     <width>481</width>
+     <width>521</width>
      <height>61</height>
     </rect>
    </property>
@@ -397,7 +397,7 @@
     <rect>
      <x>9</x>
      <y>70</y>
-     <width>482</width>
+     <width>521</width>
      <height>581</height>
     </rect>
    </property>
@@ -412,8 +412,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>461</width>
-      <height>561</height>
+      <width>500</width>
+      <height>562</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -516,6 +516,8 @@
      <bool>false</bool>
     </property>
    </widget>
+   <zorder>software_commands</zorder>
+   <zorder>search_frame</zorder>
   </widget>
  </widget>
  <resources/>

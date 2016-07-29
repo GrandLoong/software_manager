@@ -21,17 +21,26 @@ class Manager:
         return {}
 
     def save_local_data(self, data):
+        temp = data.copy()
         for k in self.get_global_data().keys():
             try:
                 data.pop(k)
             except KeyError:
                 pass
-        temp_data = {'application': data}
+        temp_data = {'application': temp}
         with open(self.local_data_file, 'w') as f:
-            yaml.safe_dump(temp_data, f)
+            yaml.safe_dump(temp_data, f, default_flow_style=False)
         print temp_data
 
-
+    @staticmethod
+    def sort_data(datas):
+        for btn in datas:
+            if 'order' not in datas[btn]:
+                datas[btn]['order'] = 10
+        if datas:
+            return sorted(datas, key=lambda key: datas[key]['order'])
+        else:
+            return {}
 if __name__ == '__main__':
     m = Manager()
     print m.global_data
