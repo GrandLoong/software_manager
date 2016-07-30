@@ -57,7 +57,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
         self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
         self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
-
+        self.pushButton_hide.clicked.connect(self.close)
+        self.pushButton_close.clicked.connect(QtGui.qApp.quit)
         for software_name in Manager.sort_data(self.data):
             icon_name = self.data[software_name]['icon']
             if icon_name:
@@ -86,7 +87,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.user_menu = QtGui.QMenu(self)
         self.user_menu.addSeparator()
         self.user_menu.addAction('')
-        self.set_transparency(True)
+        self.set_transparency(False)
         self.user_button.setMenu(self.user_menu)
         self.rightButton = False
         self.desktop = QtGui.QDesktopWidget()
