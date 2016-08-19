@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
+import re
 import subprocess
-from os.path import join as pathjoin
-
+import sys
 import webbrowser
+from os.path import join as pathjoin
 
 from PySide import QtGui, QtCore
 
 import config
-from libs.splash_screen import SplashScreen
 from libs.manager import Manager
-
-# import qdarkstyle
+from libs.splash_screen import SplashScreen
 from ui_elements.loadui import loadUiType, loadStyleSheet
 
 uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager.ui')
@@ -57,6 +55,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
         self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
         self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
+        self.pushButton_hide.setIcon(QtGui.QIcon(self.add_icon('software_manager_hide.png')))
+        self.pushButton_close.setIcon(QtGui.QIcon(self.add_icon('software_manager_close.png')))
         self.pushButton_hide.clicked.connect(self.close)
         self.pushButton_close.clicked.connect(QtGui.qApp.quit)
         for software_name in Manager.sort_data(self.data):
@@ -270,11 +270,19 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
     def search_software(self):
         self.software_commands.clear()
+        result = []
         soft_name = self.search_text.text()
+        pattem = '.*?'.join(soft_name.lower())
+        regex = re.compile(pattem)
         Manager.sort_data(self.data)
         for software_name in self.data.keys():
-            if soft_name.lower() in software_name.lower():
-                icon_name = self.data[software_name]['icon']
+            match = regex.search(software_name.lower())
+            if match:
+                result.append((len(match.group()), match.start(), software_name))
+        if result:
+            sorted_result = [x for _, _, x in sorted(result)]
+            for r in sorted_result:
+                icon_name = self.data[r]['icon']
                 if icon_name:
                     image_path = pathjoin(self.app_dir, 'resources', icon_name)
                 else:
@@ -283,8 +291,10 @@ class SoftwareManagerGUI(ui_form, ui_base):
                 if not os.path.isfile(image_path):
                     image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
                 image = QtGui.QIcon(image_path)
-                layer_item = QtGui.QListWidgetItem(image, software_name)
-                layer_item.setToolTip(u'%s' % software_name)
+                layer_item = QtGui.QListWidgetItem(image, r)
+                describe_msg = 'Describe:\n\t{0}\nPath:\n\t{1}'.format(r,
+                                                                       self.data[r].get('path'))
+                layer_item.setToolTip(describe_msg)
                 layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
                 self.software_commands.addItem(layer_item)
 
