@@ -382,7 +382,10 @@
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
     <property name="autoScroll">
-     <bool>false</bool>
+     <bool>true</bool>
+    </property>
+    <property name="autoScrollMargin">
+     <number>2</number>
     </property>
     <property name="editTriggers">
      <set>QAbstractItemView::NoEditTriggers</set>
@@ -457,8 +460,6 @@
      <bool>false</bool>
     </property>
    </widget>
-   <zorder>software_commands</zorder>
-   <zorder></zorder>
   </widget>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
@@ -544,7 +545,16 @@
       </size>
      </property>
      <property name="text">
-      <string>-</string>
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_close">
@@ -555,7 +565,16 @@
       </size>
      </property>
      <property name="text">
-      <string>X</string>
+      <string/>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
