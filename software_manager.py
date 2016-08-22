@@ -49,7 +49,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
 
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
-
         self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
         self.search_button.setIcon(QtGui.QIcon(self.add_icon('icon_inbox_clear.png')))
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
