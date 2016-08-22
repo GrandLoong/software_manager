@@ -46,7 +46,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.data = self.manager.global_data
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
         local_data = self.manager.local_data
-
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
         self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
