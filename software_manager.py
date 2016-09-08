@@ -74,9 +74,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
             layer_item.setToolTip(u'%s' % software_describe)
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
-
         self.software_commands.itemDoubleClicked.connect(self.launch)
-
         self.software_commands.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.search_text.textChanged.connect(self.search_software)
 
