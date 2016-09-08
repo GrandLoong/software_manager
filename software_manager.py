@@ -76,7 +76,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.software_commands.itemDoubleClicked.connect(self.launch)
         # self.software_commands.itemClicked.connect(self.find_item_under_mouse)
         self.software_commands.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        # self.software_commands.customContextMenuRequested.connect(self.find_item_under_mouse)
         self.search_text.textChanged.connect(self.search_software)
 
         self.pushButton_bottom_icon.clicked.connect(self.popup_web)
