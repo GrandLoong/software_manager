@@ -15,4 +15,5 @@ def get_local_profile_dir():
     desktop_profile_dir = os.path.normpath(desktop_profile_dir)
     if not os.path.exists(desktop_profile_dir):
         os.mkdir(desktop_profile_dir)
+    print desktop_profile_dir
     return desktop_profile_dir
