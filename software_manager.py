@@ -74,13 +74,11 @@ class SoftwareManagerGUI(ui_form, ui_base):
             self.software_commands.addItem(layer_item)
 
         self.software_commands.itemDoubleClicked.connect(self.launch)
-        # self.software_commands.itemClicked.connect(self.find_item_under_mouse)
         self.software_commands.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.search_text.textChanged.connect(self.search_software)
 
         self.pushButton_bottom_icon.clicked.connect(self.popup_web)
         self.search_button.clicked.connect(lambda: self.search_text.setText(''))
-
         self.user_menu = QtGui.QMenu(self)
         self.user_menu.addSeparator()
         self.user_menu.addAction('')

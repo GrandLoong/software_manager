@@ -6,7 +6,6 @@ import sys
 # can be used to customize the application's appearance and behavior
 qt_app = QApplication(sys.argv)
 
-
 class AbsolutePositioningExample(QWidget):
     ''' An example of PySide absolute positioning; the main window
         inherits from QWidget, a convenient widget for an empty window. '''
