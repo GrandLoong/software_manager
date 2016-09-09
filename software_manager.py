@@ -42,11 +42,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.delete = False
         self.gui_show = True
         self.dragPos = QtCore.QPoint(0, 0)
-
         self.data = self.manager.global_data
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint | QtCore.Qt.SubWindow)
         local_data = self.manager.local_data
-
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
 
