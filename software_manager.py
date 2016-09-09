@@ -60,6 +60,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
         for software_name in Manager.sort_data(self.data):
             icon_name = self.data[software_name]['icon']
             if icon_name:
+
                 image_path = pathjoin(self.app_dir, 'resources', icon_name)
             else:
                 image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
