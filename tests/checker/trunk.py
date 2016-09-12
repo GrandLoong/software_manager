@@ -5,14 +5,14 @@ import re
 
 
 def sendComment(message_):
-    pr_url = os.environ['ghprbPullLink']
-    # pr_url = "https://github.com/tmikota/pixoPipe/pull/56"
+    # pr_url = os.environ['ghprbPullLink']
+    pr_url = "https://github.com/GrandLoong/software_manager/pull/9"
     pr_url = pr_url.replace("github.com/", "api.github.com/repos/")
     pr_url = pr_url.replace("pull", "pulls")
     repo = pr_url.split("/")
     user, repo = repo[-4:-2]
     from pygithub3 import Github
-    gh = Github(user=user, token='903013a77d298fbc126c8156512c93a6e5fd4d02', repo=repo)
+    gh = Github(user=user, token='a90378b5da7488fd6f7d545c7dfd53301e968fed', repo=repo)
     for x in gh.issues.list_by_repo().all():
         if hasattr(x, "pull_request"):
             if x.pull_request.url == pr_url:
