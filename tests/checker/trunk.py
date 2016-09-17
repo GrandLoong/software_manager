@@ -1,7 +1,7 @@
 #!/usr/bin/python
-import sys
 import os
 import re
+import sys
 
 
 def sendComment(message_):
@@ -24,7 +24,6 @@ def sendComment(message_):
 ws = os.environ['WORKSPACE']
 f = file(os.path.join(ws, "output.txt"))
 found = False
-
 
 m = re.compile("([+-][0-9]{1,3}\.[0-9]{2})\)")
 message = ""
