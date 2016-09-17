@@ -1,8 +1,8 @@
 #!/bin/bash
 export PYTHONPATH=${WORKSPACE}/tests/checker/plugins:${PYTHONPATH}
-CHECK="*.py pixo* ui_elements preflight scenegraph sg_cache"
+CHECK="*.py"
 
-IGNORE="shotgun_api3,libs,yaml,i18n,QColorScheme"
+IGNORE="test,i18n,config"
 echo $PYTHONPATH
 CMD="pylint --ignore=${IGNORE}  --rcfile=${WORKSPACE}/tests/checker/pylintrc ${CHECK}"
 echo $CMD
