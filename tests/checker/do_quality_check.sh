@@ -2,10 +2,12 @@
 cd ${WORKSPACE}
 export PYLINTHOME=${WORKSPACE}/pylint_results
 mkdir -p PYLINTHOME
-rm *.stats
+sudo rm *.stats
 cp ~/.pylint.d/* ${PYLINTHOME}
+chmod +x ${WORKSPACE}/tests/checker/pylint_run.sh
 ${WORKSPACE}/tests/checker/pylint_run.sh > output.txt
-${WORKSPACE}/tests/checker//trunk.py
+chmod +x ${WORKSPACE}/tests/checker/trunk.py
+${WORKSPACE}/tests/checker/trunk.py
 x=$?
 rm output.txt
 exit $x
