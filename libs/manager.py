@@ -1,6 +1,6 @@
 import os
 from os.path import join as pathjoin
-import yaml
+from .dependencies import yaml
 
 import config
 

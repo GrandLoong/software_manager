@@ -3,7 +3,10 @@ import sys
 from os.path import join as pathjoin
 
 APP_DIR = os.path.dirname(__file__)
+
 RESOURCES = pathjoin(APP_DIR, 'resources')
+
+WRAPPERS = pathjoin(APP_DIR, 'wrappers')
 
 
 def get_local_profile_dir():
@@ -15,5 +18,4 @@ def get_local_profile_dir():
     desktop_profile_dir = os.path.normpath(desktop_profile_dir)
     if not os.path.exists(desktop_profile_dir):
         os.mkdir(desktop_profile_dir)
-    print 'aaaa'
     return desktop_profile_dir

@@ -11,11 +11,11 @@ from PySide import QtGui, QtCore
 import config
 from libs.manager import Manager
 from libs.splash_screen import SplashScreen
-from ui_elements.loadui import loadUiType, loadStyleSheet
+from libs.loadui import load_ui_type, load_style_sheet
 
-uiFile = pathjoin(os.path.dirname(__file__), 'resources/software_manager.ui')
-css_file = pathjoin(os.path.dirname(__file__), 'resources/software_manager.css')
-ui_form, ui_base = loadUiType(uiFile)
+uiFile = pathjoin(config.APP_DIR, 'resources/software_manager.ui')
+css_file = pathjoin(config.APP_DIR, 'resources/software_manager.css')
+ui_form, ui_base = load_ui_type(uiFile)
 
 
 class SoftwareManagerGUI(ui_form, ui_base):
@@ -23,6 +23,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
         super(SoftwareManagerGUI, self).__init__()
         self.setupUi(self)
         self.user_name = os.getenv('USERNAME')
+        self.wrappers_dir = config.WRAPPERS
         self.manager = Manager()
         self.app_dir = config.APP_DIR
         self.iconComboBox = QtGui.QComboBox()
@@ -60,7 +61,6 @@ class SoftwareManagerGUI(ui_form, ui_base):
         for software_name in Manager.sort_data(self.data):
             icon_name = self.data[software_name]['icon']
             if icon_name:
-
                 image_path = pathjoin(self.app_dir, 'resources', icon_name)
             else:
                 image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
@@ -88,21 +88,21 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.rightButton = False
         self.desktop = QtGui.QDesktopWidget()
         self.move(self.desktop.availableGeometry().width() - self.width(),
-                  self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
+                  self.desktop.availableGeometry().height() - self.height())
 
     def find_item_under_mouse(self, widget):
-        viewportPos = widget.viewport().mapFromGlobal(QtGui.QCursor.pos())
-        item = widget.itemAt(viewportPos)
+        viewport_pos = widget.viewport().mapFromGlobal(QtGui.QCursor.pos())
+        item = widget.itemAt(viewport_pos)
         return item
 
     def show_software_item_menu(self):
         item = self.find_item_under_mouse(self.software_commands)
         if item:
-            popupMenu = QtGui.QMenu(self)
-            viewFolder = self._action("Delete Current Item", self.delete_item)
-            popupMenu.addAction(viewFolder)
-            popupMenu.addSeparator()
-            popupMenu.exec_(QtGui.QCursor.pos())
+            popup_menu = QtGui.QMenu(self)
+            view_folder = self._action("Delete Current Item", self.delete_item)
+            popup_menu.addAction(view_folder)
+            popup_menu.addSeparator()
+            popup_menu.exec_(QtGui.QCursor.pos())
             # return item
 
     def delete_item(self):
@@ -146,8 +146,15 @@ class SoftwareManagerGUI(ui_form, ui_base):
             software_path = self.drag_file
             if not software_name in self.data:
                 software_icon = pathjoin(self.app_dir, 'resources', 'default_software_icon.png').replace('\\', '/')
-                self.data.update({software_name: {'path': software_path, 'icon': 'default_software_icon.png',
-                                                  'describe': software_name, 'order': self.software_commands.count()}})
+                self.data.update({
+                    software_name:
+                        {
+                            'path': software_path,
+                            'icon': 'default_software_icon.png',
+                            'describe': software_name,
+                            'order': self.software_commands.count(),
+                        }
+                })
                 image = QtGui.QIcon(software_icon)
                 layer_item = QtGui.QListWidgetItem(image, software_name)
                 layer_item.setToolTip(u'%s' % software_name)
@@ -163,8 +170,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
                 exe_path = self.data[item.text()]['path']
                 if exe_path.startswith('.'):
                     exe_path = exe_path.replace('.', self.app_dir, 1)
-                command = 'call "{0}" {1}'.format(exe_path, self.drag_file)
-                subprocess.Popen(command, shell=True)
+                command = '"{0}" {1}'.format(exe_path, self.drag_file)
+                subprocess.call(command)
 
     def save_profile(self):
         self.manager.save_local_data(self.data)
@@ -255,7 +262,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
             else:
                 self.show()
                 self.move(self.desktop.availableGeometry().width() - self.width(),
-                          self.desktop.availableGeometry().height() - self.height())  # 初始化位置到右下角
+                          self.desktop.availableGeometry().height() - self.height())
                 self.gui_show = True
 
     def set_icon(self, index):
@@ -302,12 +309,12 @@ class SoftwareManagerGUI(ui_form, ui_base):
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     gui = SoftwareManagerGUI()
-    gui.setStyleSheet(loadStyleSheet(css_file))
+    gui.setStyleSheet(load_style_sheet(css_file))
     splash = SplashScreen()
     splash.showMessage("Please wait for initialization...", color=QtCore.Qt.red)
     splash.effect()
-    app.processEvents()  # ＃设置启动画面不影响其他效果
-    # gui.show_message(u'software manager')
+    app.processEvents()
+    gui.show_message(u'Software Manager')
     gui.show()
     splash.finish(gui)
     app.exec_()

@@ -5,17 +5,17 @@ from PySide import QtGui
 from cStringIO import StringIO
 
 
-def loadUiType(uiFile):
+def load_ui_type(ui_file):
 
     """
-    Pyside lacks the "loadUiType" command, so we have to convert the ui file to py code in-memory first
+    Pyside lacks the "load_ui_type" command, so we have to convert the ui file to py code in-memory first
     and then execute it in a special frame to retrieve the form_class.
     """
-    parsed = xml.parse(uiFile)
+    parsed = xml.parse(ui_file)
     widget_class = parsed.find('widget').get('class')
     form_class = parsed.find('class').text
 
-    with open(uiFile, 'r') as f:
+    with open(ui_file, 'r') as f:
         o = StringIO()
         frame = {}
 
@@ -30,7 +30,7 @@ def loadUiType(uiFile):
     return form_class, base_class
 
 
-def loadStyleSheet(styleFile):
+def load_style_sheet(styleFile):
     f = open(styleFile, 'r')
     data = f.read()
     data.strip('\n')

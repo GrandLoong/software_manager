@@ -1,1 +1,3 @@
-call "C:\Program Files\Autodesk\Maya2015\bin\maya.exe" %1
+@echo off
+call "C:\Program Files\Autodesk\Maya2016\bin\maya.exe" %*
+exit /B

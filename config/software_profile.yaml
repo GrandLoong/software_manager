@@ -1,52 +1,10 @@
 application:
-    pixoPipeGUI:
-      path: ./wrappers/pixopipe.bat
-      icon:
-      order: 1
-      describe: |
-        pixoPipe Standlone GUI
-
-    projectConfigManager:
-      path: ./wrappers/projectConfigManager.bat
-      icon:
-      order: 2
-      describe: |
-          pixo project config manager
-
-    rv Launcher:
-      path: \\work\app_config\release\rv\modulesLauncher\rv_launcher.bat
-      icon: software_manager_rv.png
-      order: 3
-      describe: |
-          rv luancher
-
-    reset 3dsMax 2014:
-      path: \\work\app_config\release\sandbox\hao.long\python\Reset_max2014\Reset_max2014.bat
-      icon: software_manager_resetmax.png
-      order: 4
-      describe: |
-          fix max2014 crash problem, clear max2014
-
     roxy2:
-      path: ./wrappers/roxy.bat
+      path: ./roxy.bat
       icon: software_manager_roxy2.png
       order: 5
       describe: |
           pixo roxy
-
-    SG thumbnail:
-      path: \\work\app_config\release\sandbox\hao.long\python\pixo_sg_thumbnail\shotgun_thumbnail.bat
-      icon:
-      order: 6
-      describe: |
-          make sg thumbnail
-
-    pek contextcutter:
-      path: \\work\app_config\release\sandbox\hao.long\python\pek_contextcutter\pek_contextcutter.bat
-      icon:
-      order: 7
-      describe: |
-          pek contextcutter make to RV
 
     deadline monitor:
       path: C:\Program Files\Thinkbox\Deadline6\bin\deadlinemonitor.exe
@@ -55,18 +13,9 @@ application:
       describe: |
           Deadline Monitor
 
-    pxm exportit:
-      path: \\work\app_config\release\pxm_exportit\start.bat
-      icon: software_manager_pxm_exportit.png
-      order: 9
-      department: coordinator
+    Maya:
+      path: ./maya.bat
+      order: 1
+      icon: maya.png
       describe: |
-          pixomondo exportit
-
-    pek cutRef:
-      path: \\work\app_config\release\sandbox\hao.long\python\pixo_proxyCutref\pixoCutref.bat
-      icon:
-      order: 10
-      department: coordinator
-      describe: |
-          pek cutRefddd
+          Maya 2016
