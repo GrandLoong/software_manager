@@ -3,19 +3,16 @@ application:
       path: ./roxy.bat
       icon: software_manager_roxy2.png
       order: 5
-      describe: |
-          pixo roxy
+      description: pixo roxy
 
     deadline monitor:
       path: C:\Program Files\Thinkbox\Deadline6\bin\deadlinemonitor.exe
       order: 8
       icon: software_manager_deadlineMonitor.png
-      describe: |
-          Deadline Monitor
+      description: Deadline Monitor
 
     Maya:
       path: ./maya.bat
       order: 1
       icon: maya.png
-      describe: |
-          Maya 2016
+      description: Maya 2016

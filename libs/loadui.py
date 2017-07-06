@@ -1,12 +1,11 @@
-import pysideuic
 import xml.etree.ElementTree as xml
-from PySide import QtGui
-
 from cStringIO import StringIO
+
+import pysideuic
+from PySide import QtGui
 
 
 def load_ui_type(ui_file):
-
     """
     Pyside lacks the "load_ui_type" command, so we have to convert the ui file to py code in-memory first
     and then execute it in a special frame to retrieve the form_class.

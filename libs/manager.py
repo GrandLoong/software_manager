@@ -1,8 +1,8 @@
 import os
 from os.path import join as pathjoin
-from .dependencies import yaml
 
 import config
+from .dependencies import yaml
 
 
 class Manager:
@@ -41,6 +41,8 @@ class Manager:
             return sorted(datas, key=lambda key: datas[key]['order'])
         else:
             return {}
+
+
 if __name__ == '__main__':
     m = Manager()
     print m.global_data

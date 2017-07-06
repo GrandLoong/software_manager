@@ -1,51 +1,188 @@
+#pushButton_top_icon {
+    subcontrol-origin: padding;
+    border: 1px solid transparent;
+}
+
+#pushButton_bottom_icon
+{
+    subcontrol-origin: padding;
+    border: 1px solid transparent;
+}
+
+QFrame#mainFrame
+{
+background-color: rgb(27, 55, 69);
+border-radius: 15px;
+}
+
+
+QComboBox
+{
+background-color: rgb(0, 0, 0,50);
+color: rgb(200, 200, 200);
+padding-left: 4px;
+border-radius: 5px;
+}
+
+QComboBox QAbstractItemView {
+color: rgb(200, 200, 200);
+}
+
+QComboBox::item {
+border: 0px solid black;
+min-height: 35px;
+}
+
+
+/* #Items */
+QListView::item {
+min-height: 35px;
+border: solid;
+border-width:1;
+}
+
+
+
+
+
+/* Button when open*/
+
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+background-color: rgb(0, 0, 0,50);
+color: rgb(200, 200, 200);
+padding-left: 4px;
+
+}
+
+/* Normal arrow look*/
+
+QComboBox::down-arrow
+{
+	margin-top: 4px;
+	border-left: 7px solid rgb(27, 42, 50,0);
+	border-right: 7px solid rgb(27, 42, 50,0);
+	border-bottom: 7px solid rgb(27, 42, 50,0);
+	border-top: 6px solid  rgb(200,200, 200);
+}
+
+/* Arrow on open*/
+
+QComboBox:down-arrow:on
+{
+	margin-bottom: 4px;
+	border-left: 7px solid rgb(27, 42, 50,0);
+	border-right: 7px solid rgb(27, 42, 50,0);
+	border-top: 7px solid rgb(27, 42, 50,0);
+	border-bottom: 6px solid  rgb(200,200, 200);
+}
+
+/* Arrow background */
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+	padding-right: 10px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+
+
+
+/* Scrollbar  */
+QScrollBar:vertical
+{
+background-color: rgb(0, 0, 0,0);
+width: 8px;
+}
+
+/* Scrollbar background for top and bottom*/
+QScrollBar:sub-page:vertical,QScrollBar:add-page:vertical
+{
+background-color: rgb(200,200, 200,100);
+width: 6px;
+}
+
+
+/* The scrollbar itself*/
+QScrollBar::handle:vertical
+{
+background-color: rgb(250,250,250,150);
+border-radius: 4px;
+width: 8px;
+}
+
+/* Top and bottom arrows*/
+QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical {
+width: 0px;
+height: 0px;
+}
+
+/* Scrollbar background for top and bottom*/
+QScrollBar:sub-page:vertical,QScrollBar:add-page:vertical
+{
+background-color:  rgb(250, 250, 250,0);
+}
+
 #search_frame {
-    background-color: rgb(195, 195, 195);
-    color: rgb(46, 46, 46);
+    background-color: rgb(0, 0, 0,50);
+    color: rgb(200, 200, 200);
+    padding-left: 4px;
+    border-radius: 5px;
+
+}
+#below_frame{
+    background-color: rgb(0, 0, 0,50);
+    color: rgb(200, 200, 200);
+    padding-left: 4px;
     border-radius: 5px;
 }
 
-#search_frame QLineEdit {
-    background-color: rgb(195, 195, 195);
-    color: rgb(46, 46, 46);
-    font-size: 11px;
-}
-
-#search_frame QPushButton {
-    background-color: rgb(195, 195, 195);
-}
-
-#search_frame QLabel {
-    background-color: rgb(195, 195, 195);
+#below_frame QPushButton{
+    background-color: transparent;
 }
 
 #software_commands::item:hover
 {
-	background-color: transparent;
-    border: 1px solid rgb(67, 131, 168);
+	background-color: rgb(250,250,250,20);
+    border: 0px solid transparent;
     border-radius: 3px;
-}
-#software_commands::item:focus
-{
-	border: 1px solid rgb(185, 185, 185);
+    padding-left: 5px;
 }
 
-#software_commands::item:selected
+#software_commands::item
 {
- 	color: rgb(0, 198, 0);
-	background-color: rgba(67, 131, 168, 0.4);
-    border: 1px solid rgb(67, 131, 168);
+
+	background-color: transparent;
+    border: 0px solid transparent;
+
+}
+
+#software_commands::item:pressed
+{
+	background-color: rgb(0,0,0,30);
+    border: 0px solid transparent;
     border-radius: 3px;
+    padding-left: 5px;
 }
 
 #software_commands
 {
-	background-color: rgb(38, 38, 38);
+    background-color: rgb(0, 0, 0,50);
 	color: rgb(255, 255, 255);
+	padding-left: 4px;
+	border: 0px solid transparent;
+    border-radius: 5px;
 }
 
 #user_button
 {
-    margin: 2px;
+    border-top: 3px transparent;
+    border-bottom: 3px transparent;
+    border-right: 10px transparent;
+    border-left: 10px transparent;
     background-color: transparent;
 }
 
@@ -69,18 +206,49 @@
     border: 1px solid rgb(67, 131, 168);
     border-radius: 3px;
 }
+QPushButton#pushButton_top_icon
+{
+background-color: transparent;
+color: rgb(250, 250, 250);
+border-radius: 5px;
+padding-left: 15px;
+padding-right: 15px;
 
-QPushButton:focus
-{
-	border: 1px solid rgb(185, 185, 185);
 }
-QWidget
+QLineEdit
 {
-	border: transparent;
-    border-radius: 3px;
-    background-color:  rgb(38, 38, 38);
-    color: rgb(100, 100, 100);
-    font-size: 11px;
+background-color: rgb(0,0,0,50);
+border-radius: 5px;
+padding-left: 15px;
+padding-right: 15px;
+color: rgb(255, 255,255,200);
+}
+
+QLineEdit:Hover
+{
+color: rgb(255, 255,255,230);
+}
+
+QPushButton
+{
+
+background-color: rgb(250,250,250,30);
+color: rgb(250, 250, 250);
+border-radius: 5px;
+padding-left: 15px;
+padding-right: 15px;
+}
+
+QPushButton:hover
+{
+
+background-color: rgb(250,250,250,20);
+}
+
+QPushButton:pressed
+{
+
+background-color: rgb(0,0,0,30);
 }
 
 
@@ -155,4 +323,36 @@ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: none;
+}
+
+
+
+/**/
+
+QMenu{
+border-radius: 15px;
+}
+
+QMenu::indicator {
+    width: 13px;
+    height: 13px;
+}
+QMenu::item:selected {
+    background-color: rgb(0,0,0,30);
+    border-radius: 15px;
+}
+
+QMenu::separator {
+    height: 2px;
+    background: lightblue;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+
+QMenu::item {
+    padding: 2px 25px 2px 20px;
+    background-color: rgb(27, 55, 69);
+    color: white;
+    selection-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #111, stop: 1 #333);
 }

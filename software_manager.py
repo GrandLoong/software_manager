@@ -9,9 +9,9 @@ from os.path import join as pathjoin
 from PySide import QtGui, QtCore
 
 import config
+from libs.loadui import load_ui_type, load_style_sheet
 from libs.manager import Manager
 from libs.splash_screen import SplashScreen
-from libs.loadui import load_ui_type, load_style_sheet
 
 uiFile = pathjoin(config.APP_DIR, 'resources/software_manager.ui')
 css_file = pathjoin(config.APP_DIR, 'resources/software_manager.css')
@@ -49,13 +49,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
         if len(local_data.keys()) > 0:
             self.data.update(local_data)
 
-        self.search_magnifier.setPixmap(self.add_icon('search_dark.png'))
-        self.search_button.setIcon(QtGui.QIcon(self.add_icon('icon_inbox_clear.png')))
         self.user_button.setIcon(QtGui.QIcon(self.add_icon('default_user_thumb.png')))
         self.pushButton_bottom_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
-        self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
-        self.pushButton_hide.setIcon(QtGui.QIcon(self.add_icon('software_manager_hide.png')))
-        self.pushButton_close.setIcon(QtGui.QIcon(self.add_icon('software_manager_close.png')))
+        # self.pushButton_top_icon.setIcon(QtGui.QIcon(self.add_icon('software_name.png')))
         self.pushButton_hide.clicked.connect(self.close)
         self.pushButton_close.clicked.connect(QtGui.qApp.quit)
         for software_name in Manager.sort_data(self.data):
@@ -69,8 +65,8 @@ class SoftwareManagerGUI(ui_form, ui_base):
                 image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
             image = QtGui.QIcon(image_path)
             layer_item = QtGui.QListWidgetItem(image, software_name)
-            software_describe = self.data[software_name]['describe']
-            layer_item.setToolTip(u'%s' % software_describe)
+            software_description = self.data[software_name]['description']
+            layer_item.setToolTip(u'%s' % software_description)
             layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.software_commands.addItem(layer_item)
         self.software_commands.itemDoubleClicked.connect(self.launch)
@@ -78,12 +74,11 @@ class SoftwareManagerGUI(ui_form, ui_base):
         self.search_text.textChanged.connect(self.search_software)
 
         self.pushButton_bottom_icon.clicked.connect(self.popup_web)
-        self.search_button.clicked.connect(lambda: self.search_text.setText(''))
 
         self.user_menu = QtGui.QMenu(self)
         self.user_menu.addSeparator()
         self.user_menu.addAction('')
-        self.set_transparency(False)
+        self.set_transparency(True)
         self.user_button.setMenu(self.user_menu)
         self.rightButton = False
         self.desktop = QtGui.QDesktopWidget()
@@ -151,7 +146,7 @@ class SoftwareManagerGUI(ui_form, ui_base):
                         {
                             'path': software_path,
                             'icon': 'default_software_icon.png',
-                            'describe': software_name,
+                            'description': software_name,
                             'order': self.software_commands.count(),
                         }
                 })
@@ -295,9 +290,9 @@ class SoftwareManagerGUI(ui_form, ui_base):
                     image_path = pathjoin(self.app_dir, 'resources', 'default_software_icon.png')
                 image = QtGui.QIcon(image_path)
                 layer_item = QtGui.QListWidgetItem(image, r)
-                describe_msg = 'Describe:\n\t{0}\nPath:\n\t{1}'.format(r,
-                                                                       self.data[r].get('path'))
-                layer_item.setToolTip(describe_msg)
+                description_msg = 'description:\n\t{0}\nPath:\n\t{1}'.format(r,
+                                                                             self.data[r].get('path'))
+                layer_item.setToolTip(description_msg)
                 layer_item.setTextAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
                 self.software_commands.addItem(layer_item)
 
