@@ -1,7 +1,7 @@
 import os
 from os.path import join as pathjoin
 
-import config
+from software_manager import config
 from .dependencies import yaml
 
 

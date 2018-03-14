@@ -4,12 +4,13 @@ from os.path import join as pathjoin
 
 from PySide import QtGui, QtCore
 
-import config
+from software_manager import config
 
 
 class SplashScreen(QtGui.QSplashScreen):
     def __init__(self):
-        super(SplashScreen, self).__init__(QtGui.QPixmap(pathjoin(config.RESOURCES, "tray_icon.png")),
+        super(SplashScreen, self).__init__(QtGui.QPixmap(pathjoin(
+            config.RESOURCES, "tray_icon.png")),
                                            QtCore.Qt.WindowStaysOnTopHint)
 
     def effect(self):
