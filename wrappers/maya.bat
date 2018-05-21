@@ -1,1 +1,0 @@
-call "C:\Program Files\Autodesk\Maya2015\bin\maya.exe" %1
