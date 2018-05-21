@@ -1,4 +1,4 @@
-Software Manager
+Software Manager [![Build Status](https://travis-ci.org/loonghao/software_manager.png)](https://travis-ci.org/loonghao/software_manager)
 ----------------
 Software manager
 
